@@ -69,20 +69,19 @@ testUndirected = do
     putStrLn $ "\n============ Graph.Undirected.complement ================"
 
     test "complement empty              == empty" $
-          complement empty              == (empty :: UGI)
+          complement' empty              == (empty :: UGI)
 
     test "complement (vertex 1)         == (vertex 1)" $
-          complement (vertex 1)         == (vertex 1 :: UGI)
+          complement' (vertex 1)         == (vertex 1 :: UGI)
 
     test "complement (edge 1 2)         == (overlay (vertex 1) (vertex 2))" $
-          complement (edge 1 2)         == (overlay (vertex 1) (vertex 2) :: UGI)
+          complement' (edge 1 2)         == (overlay (vertex 1) (vertex 2) :: UGI)
 
     test "complement (star 1 [2, 3])    == (overlay (vertex 1) (edge 2 3))" $
-          complement (star 1 [2, 3])    == (overlay (vertex 1) (edge 2 3) :: UGI)
+          complement' (star 1 [2, 3])    == (overlay (vertex 1) (edge 2 3) :: UGI)
 
-    -- TODO: should not create undirected graphs with loops
-    -- test "complement . complement       == id" $ \(x :: UGI) ->
-    --      (complement . complement $ x)  == x
+    test "complement . complement       == id" $ \(x :: UGI) ->
+         (complement' . complement' $ x)  == x
 
     testSymmetricBasicPrimitives t
     testSymmetricIsSubgraphOf    t
